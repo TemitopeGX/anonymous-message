@@ -78,6 +78,13 @@ export default function DashboardPage() {
     router.push("/login");
   };
 
+  const getMessageLink = (linkId: string) => {
+    return `${process.env.NEXT_PUBLIC_SITE_URL}/message/${linkId}`.replace(
+      /\/$/,
+      ""
+    );
+  };
+
   return (
     <div className="min-h-screen gradient-bg">
       {/* Navbar */}
@@ -111,53 +118,49 @@ export default function DashboardPage() {
               </Button>
             </div>
 
-            <div className="space-y-4">
-              {loading ? (
-                <div className="flex justify-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500" />
-                </div>
-              ) : (
-                <>
-                  {links.map((link) => (
-                    <div
-                      key={link.id}
-                      className="glass-morphism rounded-lg p-4 card-hover"
-                    >
-                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                        <div className="flex-1">
-                          <p className="text-sm text-purple-400 mb-1">
-                            Share this link:
-                          </p>
-                          <p className="font-mono text-sm text-gray-300 break-all">
-                            {`${window.location.origin}/message/${link.id}`}
-                          </p>
-                        </div>
-                        <Button
-                          variant="outline"
-                          onClick={() =>
-                            navigator.clipboard.writeText(
-                              `${window.location.origin}/message/${link.id}`
-                            )
-                          }
-                          className="glass-morphism hover:bg-white/10 w-full sm:w-auto"
-                        >
-                          Copy Link
-                        </Button>
+            {loading ? (
+              <div className="flex justify-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500" />
+              </div>
+            ) : (
+              <>
+                {links.map((link) => (
+                  <div
+                    key={link.id}
+                    className="glass-morphism rounded-lg p-4 card-hover"
+                  >
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                      <div className="flex-1">
+                        <p className="text-sm text-purple-400 mb-1">
+                          Share this link:
+                        </p>
+                        <p className="font-mono text-sm text-gray-300 break-all">
+                          {getMessageLink(link.id)}
+                        </p>
                       </div>
+                      <Button
+                        variant="outline"
+                        onClick={() =>
+                          navigator.clipboard.writeText(getMessageLink(link.id))
+                        }
+                        className="glass-morphism hover:bg-white/10 w-full sm:w-auto"
+                      >
+                        Copy Link
+                      </Button>
                     </div>
-                  ))}
+                  </div>
+                ))}
 
-                  {links.length === 0 && (
-                    <div className="text-center py-8">
-                      <p className="text-gray-400">
-                        No links created yet. Create your first link to start
-                        receiving messages!
-                      </p>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
+                {links.length === 0 && (
+                  <div className="text-center py-8">
+                    <p className="text-gray-400">
+                      No links created yet. Create your first link to start
+                      receiving messages!
+                    </p>
+                  </div>
+                )}
+              </>
+            )}
           </section>
 
           {/* Messages Section */}
