@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 252 100% 69%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 240 10% 3.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 252 100% 69%;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground min-h-screen;
+  }
+}
+
+@layer components {
+  .glass-morphism {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl rounded-lg;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-500 font-bold;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-to-br from-gray-900 via-purple-900 to-purple-800;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:transform hover:scale-105 hover:shadow-lg;
+  }
+
+  .button-glow {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+
+  .button-glow::after {
+    content: "";
+    @apply absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300;
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.2) 0%,
+      transparent 70%
+    );
+  }
+
+  .button-glow:hover::after {
+    @apply opacity-100;
+  }
+
+  .shooting-star {
+    @apply absolute h-0.5 w-0.5 rounded-full bg-white pointer-events-none;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1),
+      0 0 0 8px rgba(255, 255, 255, 0.1);
+    animation: shoot 3s ease-in-out infinite;
+    opacity: 0;
+  }
+}
+
+@keyframes shoot {
+  0% {
+    transform: translate(0, 0) rotate(45deg) scale(0);
+    opacity: 0;
+  }
+  10%,
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(300px, 300px) rotate(45deg) scale(1);
+    opacity: 0;
+  }
+}
